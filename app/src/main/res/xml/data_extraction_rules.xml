@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Autoriser sauvegarde des plages de numéros -->
+        <include domain="sharedpref" path="CallBlockerPrefs.xml"/>
+    </cloud-backup>
+
+    <device-transfer>
+        <!-- Transférer les données lors du changement d'appareil -->
+        <include domain="sharedpref" path="CallBlockerPrefs.xml"/>
+    </device-transfer>
+</data-extraction-rules>

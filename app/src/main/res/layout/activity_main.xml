@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        style="@style/TitleText"
+        android:layout_marginBottom="24dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addRangeButton"
+        style="@style/PrimaryButton"
+        android:text="@string/add_range"
+        android:layout_marginBottom="24dp"
+        app:icon="@drawable/ic_add"
+        app:iconGravity="textStart"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/blocked_ranges_title"
+        style="@style/SubtitleText"
+        android:layout_marginBottom="12dp" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="2dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ListView
+            android:id="@+id/rangesListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="4dp"
+            android:clipToPadding="false" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
