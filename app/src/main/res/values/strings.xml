@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bloqueur d\'Appels</string>
+
+    <!-- Messages d'interface -->
+    <string name="add_range">Ajouter une plage</string>
+    <string name="range_name_hint">Nom de la plage</string>
+    <string name="start_number_hint">Numéro de début</string>
+    <string name="end_number_hint">Numéro de fin</string>
+    <string name="delete">Supprimer</string>
+    <string name="cancel">Annuler</string>
+
+    <!-- Messages de notification -->
+    <string name="call_blocked">Appel bloqué</string>
+    <string name="blocked_number">Numéro bloqué: %1$s</string>
+    <string name="service_running">Service de blocage d\'appels actif</string>
+    <string name="service_description">Bloque les appels des numéros dans les plages définies</string>
+
+    <!-- Messages de permissions -->
+    <string name="permissions_required">Permissions requises</string>
+    <string name="permissions_message">Cette application a besoin des permissions téléphone et notifications pour fonctionner.</string>
+    <string name="role_required">Configuration requise</string>
+    <string name="role_message">Pour bloquer les appels, cette app doit être le service de filtrage d\'appels.</string>
+
+    <!-- Messages de validation -->
+    <string name="fill_all_fields">Veuillez remplir tous les champs</string>
+    <string name="range_added">Plage ajoutée</string>
+    <string name="range_deleted">Plage supprimée</string>
+    <string name="delete_confirmation">Êtes-vous sûr de vouloir supprimer cette plage ?</string>
+
+    <!-- Titre des plages -->
+    <string name="blocked_ranges_title">Plages de numéros bloquées :</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>
