@@ -11,11 +11,14 @@ import android.widget.TextView;
 import com.example.callblocker.R;
 import com.example.callblocker.model.NumberRange;
 import com.example.callblocker.service.RangeManager;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,8 +55,8 @@ public class RangeAdapter extends BaseAdapter {
             holder = ViewHolder.builder()
                     .nameText((TextView) convertView.findViewById(R.id.rangeName))
                     .rangeText((TextView) convertView.findViewById(R.id.rangeNumbers))
-                    .activeSwitch((Switch) convertView.findViewById(R.id.activeSwitch))
-                    .deleteButton((Button) convertView.findViewById(R.id.deleteButton))
+                    .activeSwitch((SwitchMaterial) convertView.findViewById(R.id.activeSwitch))
+                    .deleteButton((MaterialButton) convertView.findViewById(R.id.deleteButton))
                     .build();
             convertView.setTag(holder);
         } else {
@@ -63,7 +66,7 @@ public class RangeAdapter extends BaseAdapter {
         NumberRange range = ranges.get(position);
 
         holder.nameText.setText(range.getName());
-        holder.rangeText.setText(String.format("%s - %s", range.getStartNumber(), range.getEndNumber()));
+        holder.rangeText.setText(MessageFormat.format("{0}{1}", String.format("%s", range.getPrefix()), "*".repeat(10 - range.getPrefix().length())));
         holder.activeSwitch.setChecked(range.isActive());
 
         holder.activeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -83,7 +86,7 @@ public class RangeAdapter extends BaseAdapter {
     private static class ViewHolder {
         private TextView nameText;
         private TextView rangeText;
-        private Switch activeSwitch;
+        private SwitchMaterial activeSwitch;
         private Button deleteButton;
     }
 }

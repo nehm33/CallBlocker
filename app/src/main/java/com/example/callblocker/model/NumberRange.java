@@ -7,8 +7,7 @@ import lombok.Data;
 @Builder
 public class NumberRange {
     private String name;
-    private String startNumber;
-    private String endNumber;
+    private String prefix;
     private boolean isActive;
 
     public boolean isNumberInRange(String phoneNumber) {
@@ -17,21 +16,17 @@ public class NumberRange {
         }
 
         // Nettoyer le numéro (enlever espaces, tirets, etc.)
-        String cleanNumber = phoneNumber.replaceAll("[\\s\\-\\+\\(\\)]", "");
-        String cleanStart = startNumber.replaceAll("[\\s\\-\\+\\(\\)]", "");
-        String cleanEnd = endNumber.replaceAll("[\\s\\-\\+\\(\\)]", "");
+        String cleanNumber = phoneNumber.replaceAll("[\\s\\-()]", "");
+        String cleanPrefix = prefix.replaceAll("[\\s\\-()]", "");
 
-        // Vérifier si le numéro est dans la plage
-        try {
-            long number = Long.parseLong(cleanNumber);
-            long start = Long.parseLong(cleanStart);
-            long end = Long.parseLong(cleanEnd);
-
-            return number >= start && number <= end;
-        } catch (NumberFormatException e) {
-            // Comparaison lexicographique si conversion échoue
-            return cleanNumber.compareTo(cleanStart) >= 0 &&
-                    cleanNumber.compareTo(cleanEnd) <= 0;
+        if (cleanNumber.startsWith("+") && !cleanNumber.startsWith("+33")) {
+            return false;
         }
+
+        if (cleanNumber.startsWith("+33")) {
+            cleanNumber = "0" + cleanNumber.substring(3);
+        }
+
+        return cleanNumber.startsWith(cleanPrefix);
     }
 }

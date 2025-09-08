@@ -128,13 +128,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void checkDefaultDialerStatus() {
-        TelecomManager telecomManager = getSystemService(TelecomManager.class);
-        if (telecomManager != null && !getPackageName().equals(telecomManager.getDefaultDialerPackage())) {
-            showDefaultDialerDialog();
-        }
-    }
-
     private void showPermissionDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Permissions requises")
@@ -193,28 +186,21 @@ public class MainActivity extends AppCompatActivity {
         nameInput.setHint("Nom de la plage");
         layout.addView(nameInput);
 
-        EditText startInput = new EditText(this);
-        startInput.setHint("Numéro de début");
-        startInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
-        layout.addView(startInput);
-
-        EditText endInput = new EditText(this);
-        endInput.setHint("Numéro de fin");
-        endInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
-        layout.addView(endInput);
+        EditText prefixInput = new EditText(this);
+        prefixInput.setHint("Préfixe de la plage");
+        prefixInput.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+        layout.addView(prefixInput);
 
         builder.setView(layout);
 
         builder.setPositiveButton("Ajouter", (dialog, which) -> {
             String name = nameInput.getText().toString().trim();
-            String start = startInput.getText().toString().trim();
-            String end = endInput.getText().toString().trim();
+            String prefix = prefixInput.getText().toString().trim();
 
-            if (!name.isEmpty() && !start.isEmpty() && !end.isEmpty()) {
+            if (!name.isEmpty() && !prefix.isEmpty()) {
                 NumberRange range = NumberRange.builder()
                         .name(name)
-                        .startNumber(start)
-                        .endNumber(end)
+                        .prefix(prefix)
                         .isActive(true)
                         .build();
 
