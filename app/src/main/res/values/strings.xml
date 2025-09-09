@@ -31,4 +31,27 @@
     <!-- Titre des plages -->
     <string name="blocked_ranges_title">Plages de numéros bloquées :</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <!-- Filtres automatiques -->
+    <string name="automatic_filters_title">Filtres automatiques</string>
+
+    <!-- Anti-démarchage -->
+    <string name="telemarketing_blocking">Centres d\'appels</string>
+    <string name="telemarketing_description">Préfixes connus des centres d\'appels (0162, 0270, etc.)</string>
+
+    <!-- Numéros surtaxés -->
+    <string name="premium_blocking">Numéros surtaxés</string>
+    <string name="premium_description">Numéros 08xx, 36xx et services payants</string>
+
+    <!-- Patterns suspects -->
+    <string name="suspicious_patterns_blocking">Patterns suspects</string>
+    <string name="suspicious_patterns_description">Séquences, répétitions et numéros générés</string>
+
+    <!-- Messages de statut -->
+    <string name="telemarketing_enabled">Blocage des centres d\'appels activé</string>
+    <string name="telemarketing_disabled">Blocage des centres d\'appels désactivé</string>
+    <string name="premium_enabled">Blocage des numéros surtaxés activé</string>
+    <string name="premium_disabled">Blocage des numéros surtaxés désactivé</string>
+    <string name="suspicious_enabled">Blocage des patterns suspects activé</string>
+    <string name="suspicious_disabled">Blocage des patterns suspects désactivé</string>
 </resources>

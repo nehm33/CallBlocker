@@ -1,6 +1,5 @@
 package com.example.callblocker.service;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
+
 import com.example.callblocker.MainActivity;
 import com.example.callblocker.R;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -35,7 +36,8 @@ public class NotificationService {
         }
     }
 
-    public void showBlockedCallNotification(String phoneNumber) {
+
+    public void showBlockedCallNotification(String phoneNumber, String blockReason) {
         createNotificationChannel();
 
         Intent intent = new Intent(context, MainActivity.class);
@@ -49,7 +51,10 @@ public class NotificationService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_block)
                 .setContentTitle("Appel bloqué")
-                .setContentText("Numéro bloqué: " + phoneNumber)
+                .setContentText("Numéro: " + phoneNumber)
+                .setSubText(blockReason) // Affiche la raison du blocage
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Numéro bloqué: " + phoneNumber + "\n" + blockReason))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
@@ -61,17 +66,5 @@ public class NotificationService {
         if (notificationManager != null) {
             notificationManager.notify(NOTIFICATION_ID, builder.build());
         }
-    }
-
-    public Notification createForegroundServiceNotification() {
-        createNotificationChannel();
-
-        return new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle("Bloqueur d'appels actif")
-                .setContentText("Service de blocage d'appels en cours d'exécution")
-                .setSmallIcon(R.drawable.ic_block)
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-                .setOngoing(true)
-                .build();
     }
 }

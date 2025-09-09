@@ -7,29 +7,28 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telecom.TelecomManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
 import com.example.callblocker.adapter.RangeAdapter;
 import com.example.callblocker.model.NumberRange;
 import com.example.callblocker.service.NotificationService;
 import com.example.callblocker.service.RangeManager;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RangeManager rangeManager;
-    private NotificationService notificationService;
-    private RangeAdapter adapter;
     private ListView listView;
-    private Button addRangeBtn;
 
     private final ActivityResultLauncher<String[]> permissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(),
@@ -63,15 +62,48 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void initComponents() {
         rangeManager = new RangeManager(this);
-        notificationService = new NotificationService(this);
+        NotificationService notificationService = new NotificationService(this);
         listView = findViewById(R.id.rangesListView);
-        addRangeBtn = findViewById(R.id.addRangeButton);
+        Button addRangeBtn = findViewById(R.id.addRangeButton);
+
+        // Initialisation des switches
+        SwitchMaterial telemarketingSwitch = findViewById(R.id.telemarketingSwitch);
+        SwitchMaterial premiumSwitch = findViewById(R.id.premiumSwitch);
+        SwitchMaterial suspiciousPatternsSwitch = findViewById(R.id.suspiciousPatternsSwitch);
 
         addRangeBtn.setOnClickListener(v -> showAddRangeDialog());
+
+        // Configuration du switch centres d'appels
+        telemarketingSwitch.setChecked(rangeManager.isTelemarketingBlockingEnabled());
+        telemarketingSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            rangeManager.setTelemarketingBlockingEnabled(isChecked);
+            String message = isChecked ?
+                    getString(R.string.telemarketing_enabled) :
+                    getString(R.string.telemarketing_disabled);
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
+        // Configuration du switch numéros surtaxés
+        premiumSwitch.setChecked(rangeManager.isPremiumBlockingEnabled());
+        premiumSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            rangeManager.setPremiumBlockingEnabled(isChecked);
+            String message = isChecked ?
+                    getString(R.string.premium_enabled) :
+                    getString(R.string.premium_disabled);
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
+
+        // Configuration du switch patterns suspects
+        suspiciousPatternsSwitch.setChecked(rangeManager.isSuspiciousPatternsEnabled());
+        suspiciousPatternsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            rangeManager.setSuspiciousPatternsEnabled(isChecked);
+            String message = isChecked ?
+                    getString(R.string.suspicious_enabled) :
+                    getString(R.string.suspicious_disabled);
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        });
 
         // Créer le canal de notification
         notificationService.createNotificationChannel();
@@ -148,22 +180,9 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void showDefaultDialerDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Application de téléphone")
-                .setMessage("Pour les versions Android antérieures, définir cette app comme composeur par défaut peut améliorer le blocage.")
-                .setPositiveButton("Paramètres", (dialog, which) -> {
-                    Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER);
-                    intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, getPackageName());
-                    startActivity(intent);
-                })
-                .setNegativeButton("Ignorer", null)
-                .show();
-    }
-
     private void loadRanges() {
         List<NumberRange> ranges = rangeManager.loadRanges();
-        adapter = new RangeAdapter(this, ranges, this::deleteRange);
+        RangeAdapter adapter = new RangeAdapter(this, ranges, this::deleteRange);
         listView.setAdapter(adapter);
     }
 

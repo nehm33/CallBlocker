@@ -29,7 +29,8 @@ public class CallScreeningServiceImpl extends CallScreeningService {
         CallResponse.Builder responseBuilder = new CallResponse.Builder();
 
         if (phoneNumber != null && rangeManager.shouldBlockNumber(phoneNumber)) {
-            Log.i(TAG, "Blocking call from: " + phoneNumber);
+            String blockReason = rangeManager.getBlockReason(phoneNumber);
+            Log.i(TAG, "Blocking call from: " + phoneNumber + " - Reason: " + blockReason);
 
             // Bloquer et rejeter l'appel
             responseBuilder
@@ -38,10 +39,11 @@ public class CallScreeningServiceImpl extends CallScreeningService {
                     .setSkipCallLog(false)
                     .setSkipNotification(false);
 
-            // Afficher notification de blocage
-            notificationService.showBlockedCallNotification(phoneNumber);
+            // Afficher notification avec la raison du blocage
+            notificationService.showBlockedCallNotification(phoneNumber, blockReason);
 
         } else {
+            Log.d(TAG, "Allowing call from: " + phoneNumber);
             // Autoriser l'appel
             responseBuilder
                     .setDisallowCall(false)
