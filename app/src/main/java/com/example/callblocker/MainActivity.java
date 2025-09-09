@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.example.callblocker.adapter.RangeAdapter;
 import com.example.callblocker.model.NumberRange;
-import com.example.callblocker.service.CallBlockService;
 import com.example.callblocker.service.NotificationService;
 import com.example.callblocker.service.RangeManager;
 
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             initComponents();
             loadRanges();
             checkPermissions();
-            startCallBlockService();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Erreur: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -161,11 +159,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Ignorer", null)
                 .show();
-    }
-
-    private void startCallBlockService() {
-        Intent serviceIntent = new Intent(this, CallBlockService.class);
-        startForegroundService(serviceIntent);
     }
 
     private void loadRanges() {

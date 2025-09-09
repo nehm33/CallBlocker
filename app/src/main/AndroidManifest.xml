@@ -47,11 +47,5 @@
             </intent-filter>
         </service>
 
-        <!-- Service de notification en premier plan -->
-        <service android:name=".service.CallBlockService"
-            android:enabled="true"
-            android:exported="false"
-            android:foregroundServiceType="phoneCall" />
-
     </application>
 </manifest>
