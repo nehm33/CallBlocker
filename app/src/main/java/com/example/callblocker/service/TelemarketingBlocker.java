@@ -73,7 +73,7 @@ public class TelemarketingBlocker {
             return false;
         }
 
-        String cleanNumber = phoneNumber.replaceAll("[\\s\\-+()]", "");
+        String cleanNumber = phoneNumber.replaceAll("[\\s\\-()]", "");
 
         // Supprimer le préfixe international français
         if (cleanNumber.startsWith("+33")) {
@@ -140,7 +140,7 @@ public class TelemarketingBlocker {
     }
 
     public String getBlockReason(String phoneNumber) {
-        String cleanNumber = phoneNumber.replaceAll("[\\s\\-+()]", "");
+        String cleanNumber = phoneNumber.replaceAll("[\\s\\-()]", "");
 
         if (cleanNumber.startsWith("+33")) {
             cleanNumber = "0" + cleanNumber.substring(3);
